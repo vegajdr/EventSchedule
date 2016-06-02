@@ -61,7 +61,7 @@ class LoggedIn < EventAppBase
   end
 #
   def test_can_add_events
-    post "/events", '{"title": "Meeting", "description": "Strategy planning", "date": "05-06-2016" }'
+    post "/events", '{"title": "Meeting", "description": "Strategy planning", "date": "05-06-2016", "zip_code" => "27529" }'
 
     response = get "/events"
 

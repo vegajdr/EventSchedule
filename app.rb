@@ -35,7 +35,11 @@ class EventApp < Sinatra::Base
       status 400
       halt "Can't parse json: '#{body}'"
     end
-    event = Event.new description: new_item["description"], title: new_item["title"], date: new_item["date"]
+    event = Event.new(
+      description: new_item["description"],
+      title: new_item["title"],
+      date: new_item["date"],
+      zip_code: new_item["zip_code"])
 
       DB[username] ||= []
       DB[username].push event.to_hash
