@@ -9,11 +9,11 @@ class Event
 
   end
 
-  def jasonify
+  def to_hash
     { "title" => title,
       "description" => description,
       "date" => date
-    }.to_json
+    }
 
   end
 

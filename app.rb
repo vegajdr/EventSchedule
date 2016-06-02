@@ -19,7 +19,7 @@ class EventApp < Sinatra::Base
   get "/events" do
     DB[username] ||= []
     json DB[username]
-    
+
   end
   # get "/list" do
   #   DB[username] ||= []
@@ -38,9 +38,7 @@ class EventApp < Sinatra::Base
     event = Event.new description: new_item["description"], title: new_item["title"], date: new_item["date"]
 
       DB[username] ||= []
-      DB[username].push event.jasonify
-
-      binding.pry
+      DB[username].push event.to_hash
   end
   #
   # patch "/list" do

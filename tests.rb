@@ -67,7 +67,17 @@ class LoggedIn < EventAppBase
 
     assert_equal 200, response.status
     list = JSON.parse response.body
+    assert_equal 1, list.count
+    assert_equal "Meeting", list.first["title"]
 
+  end
+
+  def test_can_add_events_with_only_title
+
+    post "/events", '{"title": "Meeting" }'
+    response = get "/events"
+    assert_equal 200, response.status
+    list = JSON.parse response.body
     assert_equal 1, list.count
     assert_equal "Meeting", list.first["title"]
 
