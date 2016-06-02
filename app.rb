@@ -7,7 +7,6 @@ class EventApp < Sinatra::Base
   set :logging, true
   set :show_exceptions, false
   error do |e|
-    binding.pry
     raise e
   end
 
@@ -20,6 +19,7 @@ class EventApp < Sinatra::Base
   get "/events" do
     DB[username] ||= []
     json DB[username]
+    
   end
   # get "/list" do
   #   DB[username] ||= []
@@ -36,15 +36,11 @@ class EventApp < Sinatra::Base
       halt "Can't parse json: '#{body}'"
     end
     event = Event.new description: new_item["description"], title: new_item["title"], date: new_item["date"]
-    binding.pry
-    if new_item["title"]
+
       DB[username] ||= []
-      DB[username].push new_item
-      body "ok"
-    else
-      status 422
-      body "No title"
-    end
+      DB[username].push event.jasonify
+
+      binding.pry
   end
   #
   # patch "/list" do

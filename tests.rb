@@ -66,10 +66,11 @@ class LoggedIn < EventAppBase
     response = get "/events"
 
     assert_equal 200, response.status
-    binding.pry
     list = JSON.parse response.body
-    assert_equal 2, list.count
-    assert_equal "groceries", list.first["title"]
+
+    assert_equal 1, list.count
+    assert_equal "Meeting", list.first["title"]
+
   end
 #
 #   def test_add_response
