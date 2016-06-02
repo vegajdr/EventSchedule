@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/json'
 require 'json'
+require './event'
 
 class EventApp < Sinatra::Base
   set :logging, true
@@ -25,25 +26,26 @@ class EventApp < Sinatra::Base
   #   json DB[username]
   # end
   #
-  # post "/list" do
-  #   body = request.body.read
-  #
-  #   begin
-  #     new_item = JSON.parse body
-  #   rescue
-  #     status 400
-  #     halt "Can't parse json: '#{body}'"
-  #   end
-  #
-  #   if new_item["title"]
-  #     DB[username] ||= []
-  #     DB[username].push new_item
-  #     body "ok"
-  #   else
-  #     status 422
-  #     body "No title"
-  #   end
-  # end
+  post "/events" do
+    body = request.body.read
+
+    begin
+      new_item = JSON.parse body
+    rescue
+      status 400
+      halt "Can't parse json: '#{body}'"
+    end
+    event = Event.new description: new_item["description"], title: new_item["title"], date: new_item["date"]
+    binding.pry
+    if new_item["title"]
+      DB[username] ||= []
+      DB[username].push new_item
+      body "ok"
+    else
+      status 422
+      body "No title"
+    end
+  end
   #
   # patch "/list" do
   #   title = params[:title]
