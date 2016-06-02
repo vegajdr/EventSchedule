@@ -21,14 +21,14 @@ class EventAppBase < Minitest::Test
   end
 end
 
-# class NotLoggedIn < EventAppBase
-#   def test_login_is_required
-#     response = get "/list"
-#     assert_equal 401, response.status
-#
-#     body = JSON.parse response.body
-#     assert_equal "You must log in", body["error"]
-#   end
+class NotLoggedIn < EventAppBase
+  def test_login_is_required
+    response = get "/events"
+    assert_equal 401, response.status
+
+    body = JSON.parse response.body
+    assert_equal "You must log in", body["error"]
+  end
 #
 #   def test_user_lists_are_separate
 #     header "Authorization", "jdabbs"
@@ -102,4 +102,4 @@ end
 #     json = JSON.parse response.body
 #     assert_equal 1, json.count
 #   end
-# end
+end

@@ -16,42 +16,46 @@ class EventApp < Sinatra::Base
     require_authorization!
   end
 
-  get "/list" do
+  get "/events" do
     DB[username] ||= []
     json DB[username]
   end
-
-  post "/list" do
-    body = request.body.read
-
-    begin
-      new_item = JSON.parse body
-    rescue
-      status 400
-      halt "Can't parse json: '#{body}'"
-    end
-
-    if new_item["title"]
-      DB[username] ||= []
-      DB[username].push new_item
-      body "ok"
-    else
-      status 422
-      body "No title"
-    end
-  end
-
-  patch "/list" do
-    title = params[:title]
-    DB[username] ||= []
-    existing_item = DB[username].find { |i| i["title"] == title }
-    if existing_item
-      DB[username].delete existing_item
-      status 200
-    else
-      status 404
-    end
-  end
+  # get "/list" do
+  #   DB[username] ||= []
+  #   json DB[username]
+  # end
+  #
+  # post "/list" do
+  #   body = request.body.read
+  #
+  #   begin
+  #     new_item = JSON.parse body
+  #   rescue
+  #     status 400
+  #     halt "Can't parse json: '#{body}'"
+  #   end
+  #
+  #   if new_item["title"]
+  #     DB[username] ||= []
+  #     DB[username].push new_item
+  #     body "ok"
+  #   else
+  #     status 422
+  #     body "No title"
+  #   end
+  # end
+  #
+  # patch "/list" do
+  #   title = params[:title]
+  #   DB[username] ||= []
+  #   existing_item = DB[username].find { |i| i["title"] == title }
+  #   if existing_item
+  #     DB[username].delete existing_item
+  #     status 200
+  #   else
+  #     status 404
+  #   end
+  # end
 
   def require_authorization!
     unless username
