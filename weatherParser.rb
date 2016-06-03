@@ -15,9 +15,11 @@
     )
   end
 
-  File.open("info.json", "w") do |f|
-  f.write(weather_data "27513").to_json
-  end
+  f = File.open("info.json", "w")
+  f.puts "#{weather_data("27513").to_json }"
+
+  f.close
+
 
   # json["forecast"]["simpleforecast"]["forecastday"][0]["date"]
   #
