@@ -15,13 +15,13 @@ attr_reader :db, :data
   def parse!
     # @db[:day] = @data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
     @data["forecast"]["simpleforecast"]["forecastday"].each do |day|
-      binding.pry
+    
     @db.push(Forecast.new(
-    month: @data["forecast"]["simpleforecast"]["forecastday"][day]["date"]["month"],
-    day: @data["forecast"]["simpleforecast"]["forecastday"][day]["date"]["day"],
-    year: @data["forecast"]["simpleforecast"]["forecastday"][day]["date"]["year"],
-    high: @data["forecast"]["simpleforecast"]["forecastday"][day]["high"]["fahrenheit"],
-    low: @data["forecast"]["simpleforecast"]["forecastday"][day]["low"]["fahrenheit"]))
+    month: day["date"]["month"],
+    day: day["date"]["day"],
+    year: day["date"]["year"],
+    high: day["high"]["fahrenheit"],
+    low: day["low"]["fahrenheit"]))
   end
 
   end
