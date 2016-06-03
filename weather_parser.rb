@@ -15,9 +15,11 @@ attr_reader :db, :data
     # @db[:day] = @data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
 
     # Forecast.new
-    # month: data["forecast"]["simpleforecast"]["forecastday"],
-    # day: parser.data["forecast"]["simpleforecast"]["forecastday"],
-
+    # month: parser.data["forecast"]["simpleforecast"]["forecastday"][0]["date"]["month"]
+    # day: parser.data["forecast"]["simpleforecast"]["forecastday"][0]["date"]["day"]
+    # year: parser.data["forecast"]["simpleforecast"]["forecastday"][0]["date"]["year"]
+    # high: parser.data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
+    # low: parser.data["forecast"]["simpleforecast"]["forecastday"].first["low"]["fahrenheit"]
 
   end
 
