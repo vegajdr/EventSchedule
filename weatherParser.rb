@@ -1,13 +1,13 @@
   require 'pry'
   require "json"
   require "./key"
-  require "./forecast"
+  # require "./forecast"
   require "HTTParty"
 
   # def zip_code
   #   #testing zipcode
   # end
-  zipcode = 27701
+  # zipcode = 27701
 
   def weather_data zipcode
     HTTParty.get(
@@ -15,11 +15,16 @@
     )
   end
 
+  File.open("info.json", "w") do |f|
+  f.write(weather_data "27513").to_json
+  end
 
-  raw = weather_data(zipcode)
-  weather = raw["forecast"]["simpleforecast"]["forecastday"][0]["high"]
-      puts "The weather on the day of your event is: #{weather}"
-  binding.pry
+  # json["forecast"]["simpleforecast"]["forecastday"][0]["date"]
+  #
+  # raw = weather_data(zipcode)
+  # weather = raw["forecast"]["simpleforecast"]["forecastday"][0]["high"]
+  #     puts "The weather on the day of your event is: #{weather}"
+  # binding.pry
 
 
   # #"http://api.wunderground.com/api/#{Wunderground_key}/geolookup/conditions/q/#{Zipcode}.json"
