@@ -40,6 +40,9 @@ class EventApp < Sinatra::Base
       year: new_item["year"],
       zip_code: new_item["zip_code"])
 
+      # compare = Compare.new event, a
+      # forecast = compare.match?
+
       DB[username] ||= []
       DB[username].push event
   end

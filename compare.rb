@@ -18,11 +18,9 @@ attr_reader :event, :parser
     parser.db.each do | forecast |
       #binding.pry
       if event.day == forecast.day && event.month == forecast.month
-
         return forecast
       else
         return false
-
       end
     end
 

@@ -19,6 +19,12 @@ class Forecast
     @low = low
   end
 
+  def to_hash {
+    "high" => high
+    "low" => low
+  }
+  end
+
 
   #
   # def high
@@ -41,5 +47,5 @@ class Forecast
   #   end
   # end
 end
-# 
+#
 # t = Forecast.new data
