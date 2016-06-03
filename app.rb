@@ -21,11 +21,7 @@ class EventApp < Sinatra::Base
     json DB[username]
 
   end
-  # get "/list" do
-  #   DB[username] ||= []
-  #   json DB[username]
-  # end
-  #
+
   post "/events" do
     body = request.body.read
 
