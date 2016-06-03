@@ -2,13 +2,12 @@ require 'sinatra/base'
 require 'sinatra/json'
 require 'json'
 require './event'
+require './compare'
 
 class EventApp < Sinatra::Base
   set :logging, true
   set :show_exceptions, false
   error do |e|
-    require 'pry'
-    binding.pry
     raise e
   end
 
@@ -20,7 +19,6 @@ class EventApp < Sinatra::Base
 
   get "/events" do
     DB[username] ||= []
-    binding.pry
     json DB[username].map { |e| e.to_hash }
   end
 
@@ -33,7 +31,7 @@ class EventApp < Sinatra::Base
       status 400
       halt "Can't parse json: '#{body}'"
     end
-    
+
     event = Event.new(
       description: new_item["description"],
       title: new_item["title"],
