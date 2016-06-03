@@ -15,7 +15,7 @@ attr_reader :db, :data
   def parse!
     # @db[:day] = @data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
     @data["forecast"]["simpleforecast"]["forecastday"].each do |day|
-    
+
     @db.push(Forecast.new(
     month: day["date"]["month"],
     day: day["date"]["day"],
@@ -28,9 +28,3 @@ attr_reader :db, :data
 
 
 end
-
-parser  = WeatherParser.new
-
-parser.parse!
-
-binding.pry
