@@ -33,6 +33,7 @@ class EventApp < Sinatra::Base
       status 400
       halt "Can't parse json: '#{body}'"
     end
+    
     event = Event.new(
       description: new_item["description"],
       title: new_item["title"],
