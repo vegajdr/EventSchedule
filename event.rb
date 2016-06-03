@@ -1,11 +1,13 @@
 class Event
 
-  attr_reader :title, :description, :date, :zip_code
+  attr_reader :title, :description, :day, :month, :year, :zip_code
 
-  def initialize title:, description:, date:, zip_code:
+  def initialize title:, description:, day:, month:, year:, zip_code:
     @title = title
     @description = description
-    @date = date
+    @month = month
+    @day = day
+    @year = year
     @zip_code = zip_code
 
   end
@@ -13,11 +15,12 @@ class Event
   def to_hash
     { "title" => title,
       "description" => description,
-      "date" => date,
+      "month" => month,
+      "day" => day,
+      "year" => year,
       "zip_code" => zip_code
     }
 
   end
-
 
 end

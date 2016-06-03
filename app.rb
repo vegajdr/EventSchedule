@@ -7,6 +7,8 @@ class EventApp < Sinatra::Base
   set :logging, true
   set :show_exceptions, false
   error do |e|
+    require 'pry'
+    binding.pry
     raise e
   end
 
@@ -18,8 +20,8 @@ class EventApp < Sinatra::Base
 
   get "/events" do
     DB[username] ||= []
-    json DB[username]
-
+    binding.pry
+    json DB[username].map { |e| e.to_hash }
   end
 
   post "/events" do
@@ -34,11 +36,13 @@ class EventApp < Sinatra::Base
     event = Event.new(
       description: new_item["description"],
       title: new_item["title"],
-      date: new_item["date"],
+      day: new_item["day"],
+      month: new_item["month"],
+      year: new_item["year"],
       zip_code: new_item["zip_code"])
 
       DB[username] ||= []
-      DB[username].push event.to_hash
+      DB[username].push event
   end
   #
   # patch "/list" do
