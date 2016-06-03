@@ -44,8 +44,8 @@ class EventApp < Sinatra::Base
       DB[username] ||= []
       DB[username].push event
   end
-  #
-  # patch "/list" do
+
+  # patch "/events" do
   #   title = params[:title]
   #   DB[username] ||= []
   #   existing_item = DB[username].find { |i| i["title"] == title }
