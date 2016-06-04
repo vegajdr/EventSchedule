@@ -15,9 +15,16 @@ attr_reader :event, :parser
   end
 
   def match?
-    parser.db.detect do | forecast |
+    search = parser.db.detect do | forecast |
       event.day == forecast.day && event.month == forecast.month
     end
+
+    if search != nil
+      return search.to_hash
+    else
+      return nil
+    end
+
   end
 
 end
