@@ -3,6 +3,16 @@ require "pry"
 require 'json'
 require "./forecast"
 
+
+# def get_weather_data zipcode
+#
+#   HTTParty.get "http://api.wunderground.com/api/#{WundergroundKey}/forecast/geolookup/conditions/q/#{zipcode}.json"
+#
+# end
+#
+#
+# r = get_weather_data "27513"
+
 class WeatherParser
 
 attr_reader :db, :data

@@ -52,7 +52,6 @@ class EventApp < Sinatra::Base
     forecast = comparison.match?
     event.forecast = forecast
 
-    binding.pry
 
     DB[username] ||= []
     DB[username].push event
