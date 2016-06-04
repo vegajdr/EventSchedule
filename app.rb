@@ -13,6 +13,38 @@ class EventApp < Sinatra::Base
     raise e
   end
 
+  def database
+    data = WeatherParser.new
+    data.parse!
+    return data
+  end
+
+  def comparison event, parsed_database
+    Compare.new event, parsed_database
+  end
+
+  def create_event request
+    Event.new(
+    description: request["description"],
+    title: request["title"],
+    day: request["day"],
+    month: request["month"],
+    year: request["year"],
+    zip_code: request["zip_code"])
+  end
+
+
+  def require_authorization!
+    unless username
+      status 401
+      halt({ error: "You must log in" }.to_json)
+    end
+  end
+
+  def username
+    request.env["HTTP_AUTHORIZATION"]
+  end
+
   DB = {}
 
   before do
@@ -28,44 +60,22 @@ class EventApp < Sinatra::Base
   post "/events" do
     database
     database.parse!
-
-
-
     body = request.body.read
-
     begin
       new_item = JSON.parse body
     rescue
       status 400
       halt "Can't parse json: '#{body}'"
     end
-
-    event = Event.new(
-    description: new_item["description"],
-    title: new_item["title"],
-    day: new_item["day"],
-    month: new_item["month"],
-    year: new_item["year"],
-    zip_code: new_item["zip_code"])
-
+    event = create_event new_item
     comparison = comparison event, database
     forecast = comparison.match?
     event.forecast = forecast
-
-
+#
     DB[username] ||= []
     DB[username].push event
   end
 
-  def database
-    data = WeatherParser.new
-    data.parse!
-    return data
-  end
-
-  def comparison event, parsed_database
-    Compare.new event, parsed_database
-  end
   #
   # patch "/list" do
   #   title = params[:title]
@@ -79,16 +89,6 @@ class EventApp < Sinatra::Base
   #   end
   # end
 
-  def require_authorization!
-    unless username
-      status 401
-      halt({ error: "You must log in" }.to_json)
-    end
-  end
-
-  def username
-    request.env["HTTP_AUTHORIZATION"]
-  end
 end
 
 # if $0 == __FILE__
