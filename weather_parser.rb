@@ -16,15 +16,17 @@ attr_reader :db, :data
     # @db[:day] = @data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
     @data["forecast"]["simpleforecast"]["forecastday"].each do |day|
 
-    @db.push(Forecast.new(
-    month: day["date"]["month"],
-    day: day["date"]["day"],
-    year: day["date"]["year"],
-    high: day["high"]["fahrenheit"],
-    low: day["low"]["fahrenheit"]))
-  end
+      @db.push(Forecast.new(
+      month: day["date"]["month"],
+      day: day["date"]["day"],
+      year: day["date"]["year"],
+      high: day["high"]["fahrenheit"],
+      low: day["low"]["fahrenheit"]))
+    end
 
   end
+
+  #def import
 
 
 end

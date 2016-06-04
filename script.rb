@@ -5,10 +5,10 @@ require 'pry'
 
 
  p = HTTParty.post "http://localhost:4567/events",
- body: '{"title": "Meeting", "description": "Strategy planning", "month": 3, "day": 1, "year": 2016, "zip_code": "27529" }',
+ body: '{"title": "Meeting", "description": "Strategy planning", "month": 6, "day": 16, "year": 2016, "zip_code": "27529" }',
  headers: { "Authorization" => "user" }
 
  r = HTTParty.get "http://localhost:4567/events",
  headers: { "Authorization" => "user" }
 
- binding.pry
+binding.pry

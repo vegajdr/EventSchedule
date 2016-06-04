@@ -1,10 +1,5 @@
 require 'pry'
 require "json"
-require "./weatherParser"
-
-
-  a =  File.read("weather.txt").chomp
-  data = JSON.parse a
 
 class Forecast
   # Data = JSON.parse(File.read("weather.txt").chomp)
@@ -19,10 +14,9 @@ class Forecast
     @low = low
   end
 
-  def to_hash {
-    "high" => high
-    "low" => low
-  }
+  def to_hash
+    {"high" => high,
+    "low" => low}
   end
 
 

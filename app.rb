@@ -3,6 +3,8 @@ require 'sinatra/json'
 require 'json'
 require './event'
 require './compare'
+require 'pry'
+require './weather_parser'
 
 class EventApp < Sinatra::Base
   set :logging, true
@@ -18,11 +20,17 @@ class EventApp < Sinatra::Base
   end
 
   get "/events" do
+
     DB[username] ||= []
     json DB[username].map { |e| e.to_hash }
   end
 
   post "/events" do
+    database
+    database.parse!
+
+
+
     body = request.body.read
 
     begin
@@ -33,18 +41,31 @@ class EventApp < Sinatra::Base
     end
 
     event = Event.new(
-      description: new_item["description"],
-      title: new_item["title"],
-      day: new_item["day"],
-      month: new_item["month"],
-      year: new_item["year"],
-      zip_code: new_item["zip_code"])
+    description: new_item["description"],
+    title: new_item["title"],
+    day: new_item["day"],
+    month: new_item["month"],
+    year: new_item["year"],
+    zip_code: new_item["zip_code"])
 
-      # compare = Compare.new event, a
-      # forecast = compare.match?
+    comparison = comparison event, database
+    forecast = comparison.match?
+    event.forecast = forecast
 
-      DB[username] ||= []
-      DB[username].push event
+    binding.pry
+
+    DB[username] ||= []
+    DB[username].push event
+  end
+
+  def database
+    data = WeatherParser.new
+    data.parse!
+    return data
+  end
+
+  def comparison event, parsed_database
+    Compare.new event, parsed_database
   end
   #
   # patch "/list" do
