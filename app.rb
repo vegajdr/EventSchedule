@@ -3,6 +3,8 @@ require 'sinatra/json'
 require 'json'
 require './event'
 require './compare'
+require 'pry'
+require './weather_parser'
 
 class EventApp < Sinatra::Base
   set :logging, true
@@ -11,50 +13,26 @@ class EventApp < Sinatra::Base
     raise e
   end
 
-  DB = {}
-
-  before do
-    require_authorization!
+  def database
+    data = WeatherParser.new
+    data.parse!
+    return data
   end
 
-  get "/events" do
-    DB[username] ||= []
-    json DB[username].map { |e| e.to_hash }
+  def comparison event, parsed_database
+    Compare.new event, parsed_database
   end
 
-  post "/events" do
-    body = request.body.read
-
-    begin
-      new_item = JSON.parse body
-    rescue
-      status 400
-      halt "Can't parse json: '#{body}'"
-    end
-
-    event = Event.new(
-      description: new_item["description"],
-      title: new_item["title"],
-      day: new_item["day"],
-      month: new_item["month"],
-      year: new_item["year"],
-      zip_code: new_item["zip_code"])
-
-      DB[username] ||= []
-      DB[username].push event
+  def create_event request
+    Event.new(
+    description: request["description"],
+    title: request["title"],
+    day: request["day"],
+    month: request["month"],
+    year: request["year"],
+    zip_code: request["zip_code"])
   end
 
-  # patch "/events" do
-  #   title = params[:title]
-  #   DB[username] ||= []
-  #   existing_item = DB[username].find { |i| i["title"] == title }
-  #   if existing_item
-  #     DB[username].delete existing_item
-  #     status 200
-  #   else
-  #     status 404
-  #   end
-  # end
 
   def require_authorization!
     unless username
@@ -66,6 +44,53 @@ class EventApp < Sinatra::Base
   def username
     request.env["HTTP_AUTHORIZATION"]
   end
+
+  DB = {}
+
+  before do
+    require_authorization!
+  end
+
+  get "/events" do
+
+    DB[username] ||= []
+    json DB[username].map { |e| e.to_hash }
+  end
+
+  post "/events" do
+    database
+    database.parse!
+    body = request.body.read
+    begin
+      new_item = JSON.parse body
+    rescue
+      status 400
+      halt "Can't parse json: '#{body}'"
+    end
+    event = create_event new_item
+    comparison = comparison event, database
+    forecast = comparison.match?
+    event.forecast = forecast
+#
+    DB[username] ||= []
+    DB[username].push event
+  end
+
+
+  #
+  # patch "/list" do
+
+  #   title = params[:title]
+  #   DB[username] ||= []
+  #   existing_item = DB[username].find { |i| i["title"] == title }
+  #   if existing_item
+  #     DB[username].delete existing_item
+  #     status 200
+  #   else
+  #     status 404
+  #   end
+  # end
+
 end
 
 # if $0 == __FILE__
