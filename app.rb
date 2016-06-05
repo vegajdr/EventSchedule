@@ -53,6 +53,7 @@ class EventApp < Sinatra::Base
 
     get '/' do
       erb :events
+      binding.pry
     end
 
   get "/events" do
@@ -71,7 +72,6 @@ class EventApp < Sinatra::Base
     end
 
     if match
-
       status 200
       body json match.to_hash
     else
