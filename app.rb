@@ -50,13 +50,13 @@ class EventApp < Sinatra::Base
     require_authorization!
   end
 
-    get '/' do
-      erb :username
-    end
+  get '/' do
+    erb :username
+  end
 
-    post '/' do
-      erb :dashboard
-    end
+  post '/' do
+    erb :dashboard
+  end
 
     post '/dashboard' do
     @name = params[:username]
@@ -105,18 +105,17 @@ class EventApp < Sinatra::Base
     new_call = weather_api_data event.zipcode
     new_call.parse!
 
-
     comparison = comparison event, new_call
     forecast = comparison.match?
     event.forecast = forecast
-#
+    #
     DB[username] ||= []
     DB[username].push event
 
-f = File.open("userdata.json", "w")
-f.puts "#{DB.to_json }"
+    f = File.open("userdata.json", "w")
+    f.puts "#{DB.to_json }"
 
-f.close
+    f.close
   end
 
 
