@@ -19,6 +19,7 @@ class Forecast
     "low" => low}
   end
 
+
   #month = @data["forecast"]["simpleforecast"]["forecastday"][0][]
   # def high
   #   @data["forecast"]["simpleforecast"]["forecastday"].first["high"]["fahrenheit"]
