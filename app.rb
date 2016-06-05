@@ -58,7 +58,26 @@ class EventApp < Sinatra::Base
   get "/events" do
 
     DB[username] ||= []
-    json DB[username].map { |e| e.to_hash }
+    body json DB[username].map { |e| e.to_hash }
+  end
+
+  get "/events/:month/:day/:year" do
+    month = params[:month].to_i
+    day = params[:day].to_i
+    year = params[:year].to_i
+
+    match = DB[username].detect do |event|
+      event.day == day && event.month == month
+    end
+
+    if match
+
+      status 200
+      body json match.to_hash
+    else
+      status 404
+    end
+
   end
 
   post "/events" do

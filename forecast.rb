@@ -31,15 +31,18 @@ end
 
   # use this to when combining information to match day and month to get weather
   # for the particular day
-#     def event_day_check
-#       e = Event.new
-#       f = Forecast.new(zipcode)
-#     if e.day && a.month == f.day && f.month
-#       return weather_data
-#     else
-#       return "Can't predict the future. Try again closer to event"
-#     end
-#   end
-# end
+
+
+  def event_day_check
+    e = Event.new
+    f = Forecast.new(zipcode)
+    if e.day && a.month == f.day && f.month
+      return weather_data
+    else
+      return "Can't predict the future. Try again closer to event"
+    end
+  end
+end
+
 #
 # t = Forecast.new data
