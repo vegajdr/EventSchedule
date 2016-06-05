@@ -2,23 +2,19 @@
 require "pry"
 require 'json'
 require "./forecast"
+require "./key"
+require "httparty"
 
 
-# def get_weather_data zipcode
-#
-#   HTTParty.get "http://api.wunderground.com/api/#{WundergroundKey}/forecast/geolookup/conditions/q/#{zipcode}.json"
-#
-# end
-#
-#
-# r = get_weather_data "27513"
+
 
 class WeatherParser
 
 attr_reader :db, :data
 
-  def initialize
-    @data = JSON.parse(File.read("info.json"))
+  def initialize zipcode
+    # @data = JSON.parse(File.read("info.json"))
+    @data = HTTParty.get "http://api.wunderground.com/api/#{Key}/geolookup/forecast10day/q/#{zipcode}.json"
     @db = []
   end
 
@@ -33,9 +29,22 @@ attr_reader :db, :data
       high: day["high"]["fahrenheit"],
       low: day["low"]["fahrenheit"]))
     end
-
   end
 
+  def weather_data zipcode
+    HTTParty.get(
+    path = "http://api.wunderground.com/api/#{Key}/geolookup/forecast10day/q/#{zipcode}.json"
+    )
+  end
+
+  # def get_weather_data zipcode
+  #
+  #   HTTParty.get "http://api.wunderground.com/api/#{WundergroundKey}/forecast/geolookup/conditions/q/#{zipcode}.json"
+  #
+  # end
+  #
+  #
+  # r = get_weather_data "27513"
   #def import
 
 

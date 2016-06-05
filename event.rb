@@ -1,14 +1,14 @@
 class Event
 
-  attr_accessor :title, :description, :day, :month, :year, :zip_code, :forecast
+  attr_accessor :title, :description, :day, :month, :year, :zipcode, :forecast
 
-  def initialize title:, description:, day:, month:, year:, zip_code:, forecast: nil
+  def initialize title:, description:, day:, month:, year:, zipcode:, forecast: nil
     @title = title
     @description = description
     @month = month
     @day = day
     @year = year
-    @zip_code = zip_code
+    @zipcode = zipcode
     @forecast = forecast
 
   end
@@ -19,7 +19,7 @@ class Event
       "month" => month,
       "day" => day,
       "year" => year,
-      "zip_code" => zip_code,
+      "zipcode" => zipcode,
       "forecast" => forecast
     }
 
