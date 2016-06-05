@@ -14,8 +14,3 @@ require 'pry'
 
  r = HTTParty.get "http://localhost:4567/events/6/7/2016",
  headers: { "Authorization" => "user" }
-
-
-
-
-binding.pry

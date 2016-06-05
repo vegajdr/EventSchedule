@@ -70,7 +70,6 @@ class EventApp < Sinatra::Base
 
       status 200
       body json match.to_hash
-      binding.pry
     else
       status 404
     end
