@@ -5,9 +5,6 @@ require "./forecast"
 require "./key"
 require "httparty"
 
-
-
-
 class WeatherParser
 
 attr_reader :db, :data
@@ -31,7 +28,7 @@ attr_reader :db, :data
     end
   end
 
-  
+
 
 
 end
