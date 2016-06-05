@@ -52,13 +52,21 @@ class EventApp < Sinatra::Base
   end
 
     get '/' do
-      erb :events
+      erb :username
+    end
+
+    post '/' do
+      erb :dashboard
     end
 
   get "/events" do
 
     DB[username] ||= []
     body json DB[username].map { |e| e.to_hash }
+  end
+
+  get '/add_events' do
+    erb :add_events
   end
 
   get "/events/:month/:day/:year" do
@@ -98,6 +106,11 @@ class EventApp < Sinatra::Base
 #
     DB[username] ||= []
     DB[username].push event
+
+f = File.open("userdata.json", "w")
+f.puts "#{DB.to_json }"
+
+f.close
   end
 
 
