@@ -5,7 +5,7 @@ require 'pry'
 
 
  p = HTTParty.post "http://localhost:4567/events",
- body: '{"title": "Meeting", "description": "Strategy planning", "month": 6, "day": 8, "year": 2016, "zipcode": "27513" }',
+ body: '{"title": "Day off", "description": "Just trying to stay sane", "month": 6, "day": 7, "year": 2016, "zipcode": "27530" }',
  headers: { "Authorization" => "user" }
 
  a = HTTParty.get "http://localhost:4567/events",

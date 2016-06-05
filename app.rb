@@ -52,7 +52,6 @@ class EventApp < Sinatra::Base
 
     get '/' do
       erb :events
-      binding.pry
     end
 
   get "/events" do
@@ -90,11 +89,8 @@ class EventApp < Sinatra::Base
     end
 
     event = create_event new_item
-    binding.pry
     new_call = weather_api_data event.zipcode
-    binding.pry
     new_call.parse!
-    binding.pry
 
     comparison = comparison event, new_call
     forecast = comparison.match?
