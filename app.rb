@@ -13,9 +13,8 @@ class EventApp < Sinatra::Base
     raise e
   end
 
-  def database
-    data = WeatherParser.new
-    data.parse!
+  def weather_api_data zipcode
+    data = WeatherParser.new zipcode
     return data
   end
 
@@ -30,7 +29,7 @@ class EventApp < Sinatra::Base
     day: request["day"],
     month: request["month"],
     year: request["year"],
-    zip_code: request["zip_code"])
+    zipcode: request["zipcode"])
   end
 
   def require_authorization!
@@ -81,8 +80,7 @@ class EventApp < Sinatra::Base
   end
 
   post "/events" do
-    database
-    database.parse!
+
     body = request.body.read
     begin
       new_item = JSON.parse body
@@ -92,7 +90,13 @@ class EventApp < Sinatra::Base
     end
 
     event = create_event new_item
-    comparison = comparison event, database
+    binding.pry
+    new_call = weather_api_data event.zipcode
+    binding.pry
+    new_call.parse!
+    binding.pry
+
+    comparison = comparison event, new_call
     forecast = comparison.match?
     event.forecast = forecast
 #
