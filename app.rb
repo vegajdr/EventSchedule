@@ -33,8 +33,8 @@ class EventApp < Sinatra::Base
     zip_code: request["zip_code"])
   end
 
-
   def require_authorization!
+    username = true
     unless username
       status 401
       halt({ error: "You must log in" }.to_json)
@@ -50,6 +50,10 @@ class EventApp < Sinatra::Base
   before do
     require_authorization!
   end
+
+    get '/' do
+      erb :events
+    end
 
   get "/events" do
 
@@ -67,6 +71,7 @@ class EventApp < Sinatra::Base
       status 400
       halt "Can't parse json: '#{body}'"
     end
+
     event = create_event new_item
     comparison = comparison event, database
     forecast = comparison.match?
