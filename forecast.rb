@@ -17,6 +17,7 @@ class Forecast
     {"high" => high,
     "low" => low}
   end
+end
 
 
 #
