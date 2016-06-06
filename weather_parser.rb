@@ -2,7 +2,7 @@
 require "pry"
 require 'json'
 require "./forecast"
-require "./key"
+require "./Key"
 require "httparty"
 
 class WeatherParser
