@@ -1,3 +1,17 @@
-<!-- <% DB[username].each do |event|
- event.to_json
-end %> -->
+Hi! To use this program download the files and run app.rb in your terminal to start your server
+
+To add an event, submit a POST request with a JSON body:
+
+post = HTTParty.post "http://localhost:4567/events",
+body: '{"title": "Day off", "description": "Just trying to stay sane", "month": 6, "day": 7, "year": 2016, "zipcode": "27530" }',
+headers: { "Authorization" => "user" }
+
+To see all events, submit a GET request:
+
+HTTParty.get "http://localhost:4567/events",
+headers: { "Authorization" => "user" }
+
+To see a specific event by date, submit a GET request with month/day/year params:
+
+date = HTTParty.get "http://localhost:4567/events/6/7/2016",
+headers: { "Authorization" => "user" }
