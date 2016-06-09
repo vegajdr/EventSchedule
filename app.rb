@@ -54,6 +54,14 @@ class EventApp < Sinatra::Base
     erb :username
   end
 
+  get '/dummy' do
+    user = {
+    "1" => {"bookmark_name" => "Article", "bookmark_description" => "Great Read!", "bookmark_url" => "https://www.notawebsite.com/article"},
+    "2" => {"bookmark_name" => "Video", "bookmark_description" => "Cool cat video", "bookmark_url" => "https://www.notawebsite.com/catvideo"}
+  }
+  body user.to_json
+  end
+
   post '/' do
     erb :dashboard
   end
