@@ -6,6 +6,7 @@ gem 'sinatra', require: false
 gem 'sinatra-contrib'
 gem 'httparty'
 gem 'rack'
+gem 'rack-cors', require: 'rack/cors'
 
 group :development do
   gem 'httparty'
