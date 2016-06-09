@@ -42,7 +42,7 @@ GEM
       sinatra (~> 1.4.0)
       tilt (>= 1.3, < 3)
     slop (3.6.0)
-    tilt (2.0.4)
+    tilt (2.0.5)
 
 PLATFORMS
   ruby
@@ -53,6 +53,7 @@ DEPENDENCIES
   minitest-focus
   minitest-reporters
   pry
+  rack
   rack-test
   sinatra
   sinatra-contrib
